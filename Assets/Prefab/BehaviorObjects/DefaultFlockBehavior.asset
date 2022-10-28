@@ -14,11 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   behaviors:
   - {fileID: 11400000, guid: 47f61e00bce1aa549a81235344b5992d, type: 2}
-  - {fileID: 11400000, guid: fa119689a84c6c543962a534d309f615, type: 2}
   - {fileID: 11400000, guid: 16920a21a0e720f46a217a96f152a7a9, type: 2}
   - {fileID: 11400000, guid: db70a003b98b39d46898e1e0fb700b64, type: 2}
+  - {fileID: 11400000, guid: ebbeaffc023478049bd08e210c0aa953, type: 2}
+  - {fileID: 11400000, guid: fa119689a84c6c543962a534d309f615, type: 2}
+  - {fileID: 11400000, guid: 286e92ccc72407a4a8f7972f8f2cde04, type: 2}
   weights:
   - 4
-  - 1
-  - 2
-  - 0.1
+  - 2.04
+  - 0.55
+  - 0
+  - 0.61
+  - 1.08

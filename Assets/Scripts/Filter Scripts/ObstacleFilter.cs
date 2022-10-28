@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleFilter : MonoBehaviour
+[CreateAssetMenu(menuName = "Flock/Filter/Obstacle Filter")]
+public class ObstacleFilter : ContextFilter
 {
-    // Start is called before the first frame update
-    void Start()
+    public LayerMask mask;
+    public override List<Transform> Filter(FlockAgent agent, List<Transform> original)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        List<Transform> filtered = new List<Transform>();
+        foreach (Transform item in original)
+        {
+            if (mask == (mask | (1 << item.gameObject.layer)))
+            {
+                filtered.Add(item);
+            }
+        }
+        return filtered;
     }
 }
