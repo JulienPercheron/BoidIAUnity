@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306ca9865d5130b44aa30bbd820234a0, type: 3}
+  m_Name: FreeRoamFlockBehavior
+  m_EditorClassIdentifier: 
+  behaviors:
+  - {fileID: 11400000, guid: 47f61e00bce1aa549a81235344b5992d, type: 2}
+  - {fileID: 11400000, guid: 16920a21a0e720f46a217a96f152a7a9, type: 2}
+  - {fileID: 11400000, guid: db70a003b98b39d46898e1e0fb700b64, type: 2}
+  - {fileID: 11400000, guid: fa119689a84c6c543962a534d309f615, type: 2}
+  weights:
+  - 5.1
+  - 2.04
+  - 0.19
+  - 0.71

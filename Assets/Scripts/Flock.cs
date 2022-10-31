@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Flock : MonoBehaviour
 {
     public FlockAgent agentPrefab;
     List<FlockAgent> agents = new List<FlockAgent>();
-    public FlockBehavior behavior;
+    public FlockBehavior behaviorFreeRoam;
+    public FlockBehavior behaviorTargetObjective;
+
+    public GameObject scoreCanvas;
+    public GameObject scoreGO;
+    private int score = 0;
+
+    public GameObject endCanvas;
+    public GameObject endScoreGO;
 
     [Range(1, 500)]
     public int startingCount = 250;
@@ -45,26 +54,92 @@ public class Flock : MonoBehaviour
             newAgent.name = "Agent " + i;
             agents.Add(newAgent);
         }
+
+        scoreGO.GetComponent<Text>().text = score.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(0))
+            setControlledByPlayer();
+
         foreach (FlockAgent agent in agents)
         {
             List<Transform> context = GetNearbyObjects(agent);
-
-            //FOR DEMO
-            //agent.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 6f);
+            Vector2 move;
             
-            Vector2 move = behavior.CalculateMove(agent, context, this);
-            move *= driveFactor;
-            if(move.sqrMagnitude > squareMaxSpeed)
+            switch (agent.etat)
             {
-                move = move.normalized * maxSpeed;
+                case FlockAgent.Etat.freeRoam:
+                    Debug.Log("freeRoam");
+                    move = behaviorFreeRoam.CalculateMove(agent, context, this);
+                    move *= driveFactor;
+                    if (move.sqrMagnitude > squareMaxSpeed)
+                    {
+                        move = move.normalized * maxSpeed;
+                    }
+                    agent.Move(move);
+                    break;
+
+                case FlockAgent.Etat.targetObjective:
+                    Debug.Log("Objective");
+                    move = behaviorTargetObjective.CalculateMove(agent, context, this);
+                    move *= driveFactor;
+                    if (move.sqrMagnitude > squareMaxSpeed)
+                    {
+                        move = move.normalized * maxSpeed;
+                    }
+                    agent.Move(move);
+                    break;
+                case FlockAgent.Etat.controlledByPlayer:
+                    float horizontalInput = Input.GetAxis("Horizontal");
+                    float verticalInput = Input.GetAxis("Vertical");
+                    move = new Vector2(horizontalInput, verticalInput);
+                    move = move * driveFactor;
+                    agent.Move(move);
+                    break;
             }
-            agent.Move(move);
-            
+        }
+    }
+
+    public void setTargetObjective(Vector2 pos)
+    {
+        for (int i = 0; i < agents.Count; i++)
+        {
+            if(agents[i].etat != FlockAgent.Etat.controlledByPlayer)
+            {
+                agents[i].setTargetObjective(pos);
+            }
+        }
+    }
+
+    public void setFreeRoam()
+    {
+        for (int i = 0; i < agents.Count; i++)
+        {
+            if (agents[i].etat != FlockAgent.Etat.controlledByPlayer)
+            {
+                agents[i].setFreeRoam();
+            }
+        }
+
+        score++;
+        if (score >= 5)
+            endTheGame();
+        scoreGO.GetComponent<Text>().text = score.ToString();
+    }
+
+    void setControlledByPlayer()
+    {
+        if(agents[0].etat == FlockAgent.Etat.controlledByPlayer)
+        {
+            agents[0].etat = agents[1].etat;
+            agents[0].setSprite();
+        }
+        else
+        {
+            agents[0].setControlledByPlayer();
         }
     }
 
@@ -81,5 +156,13 @@ public class Flock : MonoBehaviour
         }
 
         return context;
+    }
+
+    void endTheGame()
+    {
+        agents.Clear();
+        scoreCanvas.SetActive(false);
+        endCanvas.SetActive(true);
+        endScoreGO.GetComponent<Text>().text = Time.realtimeSinceStartup + "s";
     }
 }
