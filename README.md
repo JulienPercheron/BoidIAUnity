@@ -9,4 +9,4 @@ Il est possible d'appuyer sur clic gauche pour prendre le contrôle d'un boid (i
 La couleur des boids change selon leur etat.<br /> <br /> 
 Le score est incrementé a chaque fois qu'un boid touche l'objectif. Lorsque ce score atteint 5 le joueur a gagné. Le temps qu'il a mis a atteindre ces 5 points représente score. <br /> 
 
-Les boids ont été réalisés à partir de la suite de tutoriels suivants : https://www.youtube.com/playlist?list=PL5KbKbJ6Gf99UlyIqzV1UpOzseyRn5H1d
+Les boids ont été réalisés en partie à partir de la suite de tutoriels suivants : https://www.youtube.com/playlist?list=PL5KbKbJ6Gf99UlyIqzV1UpOzseyRn5H1d
